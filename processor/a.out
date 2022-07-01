@@ -1,0 +1,80 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1110-g18392a46)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_000002511adf5b70 .scope module, "mux_4to1_assign" "mux_4to1_assign" 2 1;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 4 "out";
+    .port_info 1 /INPUT 4 "a";
+    .port_info 2 /INPUT 4 "b";
+    .port_info 3 /INPUT 4 "c";
+    .port_info 4 /INPUT 4 "d";
+    .port_info 5 /INPUT 2 "sel";
+v000002511aec7230_0 .net *"_ivl_1", 0 0, L_000002511ae4d8a0;  1 drivers
+v000002511aecc3e0_0 .net *"_ivl_3", 0 0, L_000002511ae4dbc0;  1 drivers
+v000002511ae04160_0 .net *"_ivl_4", 3 0, L_000002511ae4dda0;  1 drivers
+v000002511aecda50_0 .net *"_ivl_7", 0 0, L_000002511ae4dee0;  1 drivers
+v000002511aecdaf0_0 .net *"_ivl_8", 3 0, L_000002511ae4e660;  1 drivers
+o000002511ae090c8 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v000002511aecdb90_0 .net "a", 3 0, o000002511ae090c8;  0 drivers
+o000002511ae090f8 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v000002511aecdc30_0 .net "b", 3 0, o000002511ae090f8;  0 drivers
+o000002511ae09128 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v000002511aecdcd0_0 .net "c", 3 0, o000002511ae09128;  0 drivers
+o000002511ae09158 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v000002511ae4da80_0 .net "d", 3 0, o000002511ae09158;  0 drivers
+v000002511ae4de40_0 .net "out", 3 0, L_000002511ae4e700;  1 drivers
+o000002511ae091b8 .functor BUFZ 2, C4<zz>; HiZ drive
+v000002511ae4d9e0_0 .net "sel", 1 0, o000002511ae091b8;  0 drivers
+L_000002511ae4d8a0 .part o000002511ae091b8, 1, 1;
+L_000002511ae4dbc0 .part o000002511ae091b8, 0, 1;
+L_000002511ae4dda0 .functor MUXZ 4, o000002511ae09128, o000002511ae09158, L_000002511ae4dbc0, C4<>;
+L_000002511ae4dee0 .part o000002511ae091b8, 0, 1;
+L_000002511ae4e660 .functor MUXZ 4, o000002511ae090c8, o000002511ae090f8, L_000002511ae4dee0, C4<>;
+L_000002511ae4e700 .functor MUXZ 4, L_000002511ae4e660, L_000002511ae4dda0, L_000002511ae4d8a0, C4<>;
+S_000002511aecd8c0 .scope module, "tb_testmux2" "tb_testmux2" 3 2;
+ .timescale 0 0;
+v000002511ae4d940_0 .var "a", 15 0;
+v000002511ae4db20_0 .var "b", 15 0;
+v000002511ae4e340_0 .net "out", 15 0, L_000002511ae4e480;  1 drivers
+v000002511ae4e160_0 .var "sel", 0 0;
+S_000002511aec6a80 .scope module, "m1" "mux_2to1_16bit" 3 7, 2 29 0, S_000002511aecd8c0;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 16 "out";
+    .port_info 1 /INPUT 16 "a";
+    .port_info 2 /INPUT 16 "b";
+    .port_info 3 /INPUT 1 "sel";
+v000002511ae4e020_0 .net "a", 15 0, v000002511ae4d940_0;  1 drivers
+v000002511ae4dc60_0 .net "b", 15 0, v000002511ae4db20_0;  1 drivers
+v000002511ae4dd00_0 .net "out", 15 0, L_000002511ae4e480;  alias, 1 drivers
+v000002511ae4e2a0_0 .net "sel", 0 0, v000002511ae4e160_0;  1 drivers
+L_000002511ae4e480 .functor MUXZ 16, v000002511ae4d940_0, v000002511ae4db20_0, v000002511ae4e160_0, C4<>;
+    .scope S_000002511aecd8c0;
+T_0 ;
+    %vpi_call 3 9 "$monitor", $time, " out = %h, a = %h, b = %h", v000002511ae4e340_0, v000002511ae4d940_0, v000002511ae4db20_0 {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_000002511aecd8c0;
+T_1 ;
+    %pushi/vec4 1, 0, 16;
+    %store/vec4 v000002511ae4d940_0, 0, 16;
+    %pushi/vec4 2, 0, 16;
+    %store/vec4 v000002511ae4db20_0, 0, 16;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v000002511ae4e160_0, 0, 1;
+    %delay 2, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v000002511ae4e160_0, 0, 1;
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "./mux.v";
+    "tb_mux2.v";
